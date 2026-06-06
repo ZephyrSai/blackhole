@@ -15,10 +15,16 @@ import { clamp, smoothstep, damp } from './utils.js';
 
 const MOTION = matchMedia('(prefers-reduced-motion: reduce)').matches ? 0.35 : 1;
 
+// phones run a per-pixel geodesic raytracer, so cap the resolution hard there:
+// fewer pixels × ~60 steps each is the single biggest mobile win.
+const IS_MOBILE = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ||
+  Math.min(innerWidth, innerHeight) < 600;
+const MAX_DPR = IS_MOBILE ? 1.2 : 1.75;
+
 // ---------------- renderer / scene ----------------
 const canvas = document.getElementById('scene');
-const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
-renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1.75));
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: !IS_MOBILE, powerPreference: 'high-performance' });
+renderer.setPixelRatio(Math.min(devicePixelRatio || 1, MAX_DPR));
 renderer.setSize(innerWidth, innerHeight);
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -280,7 +286,8 @@ function frame() {
   const act = journey.chapters[active];
   const pose = act.camera(states[active].lp, time);
   const aspect = innerWidth / Math.max(1, innerHeight);
-  const fit = aspect < 1 ? 1 + (1 - aspect) * 1.15 : 1;
+  // portrait: dolly the camera back so wide 3D diagrams fit a tall narrow screen
+  const fit = aspect < 1 ? 1 + (1 - aspect) * 1.5 : 1;
   desiredPos.copy(pose.pos).sub(pose.target).multiplyScalar(fit).add(pose.target);
   desiredTarget.copy(pose.target);
   const f = 1 - Math.exp(-2.6 * dt);

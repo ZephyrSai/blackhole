@@ -178,7 +178,10 @@ const FRAG = /* glsl */ `
 
   void main() {
     float aspect = uRes.x / max(1.0, uRes.y);
-    vec2 q = (vUv - 0.5) * vec2(aspect, 1.0); // aspect-correct, y up, resolution-free
+    // frame by the SHORTER side so the hole never overflows on tall phone screens
+    vec2 q = (aspect >= 1.0)
+      ? (vUv - 0.5) * vec2(aspect, 1.0)        // landscape: fit by height
+      : (vUv - 0.5) * vec2(1.0, 1.0 / aspect); // portrait: fit by width
     vec2 uvScreen = q;
 
     // camera basis from distance + inclination + slow yaw
@@ -304,9 +307,9 @@ export function buildBlackHole(palette) {
   mesh.frustumCulled = false;
   mesh.renderOrder = -10; // draw first, behind everything
 
-  // mobile / small screens: fewer steps, keep it smooth
-  const small = Math.min(window.innerWidth, window.innerHeight) < 720;
-  uniforms.uSteps.value = small ? 96 : 150;
+  // fewer integration steps on smaller screens, to keep the raytracer smooth
+  const stepsFor = (w, h) => { const m = Math.min(w, h); return m < 500 ? 64 : m < 700 ? 100 : 150; };
+  uniforms.uSteps.value = stepsFor(window.innerWidth, window.innerHeight);
 
   function recolor(p) {
     uniforms.uLight.value = p.name === 'light' ? 1 : 0;
@@ -320,8 +323,7 @@ export function buildBlackHole(palette) {
 
   function setResolution(w, h) {
     uniforms.uRes.value.set(w, h);
-    const sm = Math.min(w, h) < 720;
-    uniforms.uSteps.value = sm ? 96 : 150;
+    uniforms.uSteps.value = stepsFor(w, h);
   }
 
   return { mesh, uniforms, recolor, setResolution };

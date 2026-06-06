@@ -217,17 +217,55 @@ html.is-dragging, html.is-dragging body {
 }
 
 @media (max-width: 640px) {
+  /* top bar: shrink so the controls never clip off-screen */
+  .ui--top { padding: 0.8rem 0.85rem; }
+  .controls { gap: 0.4rem; }
   .ctrl__label { display: none; }
-  .ctrl { padding: 0.55rem; }
+  .ctrl { padding: 0.5rem; }
   .ctrl__icon { font-size: 0.9rem; }
-  .ui--progress { gap: 0.55rem; padding: 0 0.9rem calc(0.6rem + env(safe-area-inset-bottom)); }
-  .progress__label { min-width: 0; font-size: 0.6rem; letter-spacing: 0.1em; white-space: nowrap; }
+  .brand__mark { font-size: 0.95rem; }
+  .brand__name { font-size: 0.62rem; letter-spacing: 0.2em; }
+
+  /* tighter scroll lengths + padding */
+  .chapter { height: 200vh; }
+  .chapter--tall { height: 248vh; }
+  .chapter--hero { height: 165vh; }
+  .chapter__sticky { padding: 1.1rem; }
+  .chapter__content::before { inset: -22% -16%; opacity: 0.9; }
+
+  /* scale down typography so it fits a phone without overlapping */
+  .eyebrow { font-size: 0.64rem; letter-spacing: 0.24em; margin-bottom: 0.75rem; }
+  .title { font-size: clamp(1.85rem, 8.6vw, 2.5rem); margin-bottom: 0.85rem; }
+  .title--hero { font-size: clamp(2.5rem, 13vw, 3.6rem); letter-spacing: 0.03em; }
+  .lede { font-size: 1rem; line-height: 1.45; margin-bottom: 1.3rem; max-width: 100%; }
+  .body { font-size: 0.95rem; line-height: 1.6; }
+  .quote { font-size: 0.98rem; line-height: 1.42; margin-top: 1.2rem; max-width: 100%; }
+  .quote cite { font-size: 0.66rem; margin-top: 0.6rem; }
+  .quote--long { font-size: 0.9rem; line-height: 1.46; }
+  .enter { margin-top: 1.5rem; padding: 0.78rem 1.7rem; font-size: 0.92rem; }
+  .scroll-hint { margin-top: 1rem; font-size: 0.68rem; letter-spacing: 0.16em; }
+  .replay { margin-top: 1.4rem; }
+  .credit { margin-top: 1rem; }
+  .credit--dedication { margin-top: 1.1rem; }
+
+  /* discreet seek bar */
+  .ui--progress { gap: 0.5rem; padding: 0 0.85rem calc(0.55rem + env(safe-area-inset-bottom)); }
+  .progress__label { min-width: 0; font-size: 0.56rem; letter-spacing: 0.08em; white-space: nowrap; }
   .progress__track { height: 1.5px; }
+
+  /* one column: all text left-aligned on phones */
   .chapter[data-index="2"] .chapter__content,
   .chapter[data-index="5"] .chapter__content,
   .chapter[data-index="8"] .chapter__content,
   .chapter[data-index="11"] .chapter__content,
   .chapter[data-index="14"] .chapter__content { text-align: left; margin-left: 0; }
+
+  .chapter[data-index="15"] .title { font-size: clamp(1.7rem, 7vw, 2.3rem); }
+}
+
+/* very narrow: drop the wordmark so the toggles always fit */
+@media (max-width: 430px) {
+  .brand__name { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
