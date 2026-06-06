@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#02030a" />
+    <title>Into the Dark — Black Holes, White Holes &amp; Wormholes</title>
+    <meta
+      name="description"
+      content="An interactive voyage into a black hole: gravitational lensing, a simulated accretion disc, the plunge through the horizon, and the unfinished war between quantum mechanics and relativity — onward to white holes and wormholes." />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet" />
+    <link rel="stylesheet" href="css/styles.css" />
+
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <canvas id="scene" aria-hidden="true"></canvas>
+    <div class="vignette" aria-hidden="true"></div>
+
+    <header class="ui ui--top">
+      <div class="brand">
+        <span class="brand__mark">◉</span>
+        <span class="brand__name">EVENT HORIZON</span>
+      </div>
+      <nav class="controls">
+        <button id="themeBtn" class="ctrl" aria-label="Toggle light and dark mode">
+          <span class="ctrl__icon">◐</span><span class="ctrl__label">Dark</span>
+        </button>
+        <button id="soundBtn" class="ctrl" aria-pressed="true" aria-label="Toggle sound">
+          <span class="ctrl__icon">♪</span><span class="ctrl__label">Sound on</span>
+        </button>
+      </nav>
+    </header>
+
+    <div class="ui ui--progress" aria-hidden="true">
+      <span id="chapterLabel" class="progress__label">✦</span>
+      <div class="progress__track"><div id="progressFill" class="progress__fill"></div></div>
+    </div>
+
+    <main>
+      <!-- 0 — HERO -->
+      <section class="chapter chapter--hero" data-index="0">
+        <div class="chapter__sticky"><div class="chapter__content">
+          <p class="eyebrow">An interactive descent</p>
+          <h1 class="title title--hero">INTO THE DARK</h1>
+          <p class="lede">A voyage to the edge of a <em>black hole</em> and through it — past bent starlight and burning gas, into the place where our two greatest theories break. Scroll to fall; <span class="cue">grab the glowing handles</span> to play.</p>
+          <blockquote class="quote">
+            “The black holes of nature are the most perfect macroscopic objects there are in the universe: the only elements in their construction are our concepts of space and time.”
+            <cite>— Subrahmanyan Chandrasekhar</cite>
+          </blockquote>
+          <button id="enterBtn" class="enter">Begin the descent&nbsp;<span class="enter__note">♪</span></button>
+          <p class="scroll-hint" id="hint"><span>or scroll to fall · drag to play</span><span class="chev">⌄</span></p>
+        </div></div>
+      </section>
+
+      <!-- 1 — Spacetime -->
+      <section class="chapter" data-index="1">
+        <div class="chapter__sticky"><div class="chapter__content">
+          <p class="eyebrow">Relativity · The stage</p>
+          <h2 class="title">The Fabric of Spacetime</h2>
+          <p class="body">Einstein’s great idea: space and time are not an empty backdrop but a single flexible <em>fabric</em>. Mass and energy curve it, and that curvature <em>is</em> gravity. Things don’t fall because a force tugs them — they coast in straight lines through a valley that mass has dug. <span class="cue">Drag the mass</span> and watch the grid bend; the little worlds nearby follow the slope it carves.</p>
+        </div></div>
+      </section>
+
+      <!-- 2 — Lensing -->
+      <section class="chapter" data-index="2">
+        <div class="chapter__sticky"><div class="chapter__content">
+          <p class="eyebrow">Light · Bent paths</p>
+          <h2 class="title">Gravitational Lensing</h2>
+          <p class="body">Light always takes the shortest path — but through curved space the shortest path is a <em>curve</em>. So a heavy mass works like a lens: a galaxy hidden directly behind it is smeared into arcs, doubled, even closed into a perfect circle — an <em>Einstein ring</em>. Astronomers use this to weigh the invisible. <span class="cue">Drag to orbit</span> and watch the starfield stream and split around the dark.</p>
+        </div></div>
+      </section>
+
+      <!-- 3 — Event horizon -->
+      <section class="chapter" data-index="3">
+        <div class="chapter__sticky"><div class="chapter__content">
+          <p class="eyebrow">The point of no return</p>
+          <h2 class="title">The Event Horizon</h2>
+          <p class="body">Pack enough mass into a small enough space and the valley becomes a cliff. At one radius — the <em>Schwarzschild radius</em> — the escape velocity reaches the speed of light. Nothing, not even light, can climb back out. This one-way surface is the <em>event horizon</em>, and the round darkness it casts is the black hole’s <em>shadow</em>.</p>
+          <blockquote class="quote">
+            “The black hole teaches us that space can be crumpled like a piece of paper into an infinitesimal dot, that time can be extinguished like a blown-out flame.”
+            <cite>— John Archibald Wheeler</cite>
+          </blockquote>
+        </div></div>
+      </section>
+
+      <!-- 4 — Photon sphere -->
+      <section class="chapter" data-index="4">
+        <div class="chapter__sticky"><div class="chapter__content">
+          <p class="eyebrow">Where light orbits</p>
+          <h2 class="title">The Photon Sphere</h2>
+          <p class="body">Just outside the horizon, at one and a half times its radius, gravity is steep enough to bend light into a <em>circle</em>. A beam aimed just so will orbit the hole — once, twice, or forever, before it falls or flies free. Their piled-up images form the razor-thin, glowing <em>photon ring</em> that traces the shadow’s edge: light that looped the abyss and came back to tell us.</p>
+        </div></div>
+      </section>
+
+      <!-- 5 — Accretion disc -->
+      <section class="chapter chapter--tall" data-index="5">
+        <div class="chapter__sticky"><div class="chapter__content">
+          <p class="eyebrow">The fire around the dark</p>
+          <h2 class="title">The Accretion Disc</h2>
+          <p class="body">Falling gas can’t dive straight in — it spirals, crowds, and shears itself into a flat, blazing <em>accretion disc</em>, heated by friction to millions of degrees until it shines as a quasar. Its near edge sweeps toward us and <em>Doppler-beams</em> brighter; the hole’s gravity lenses the <em>far</em> side up and over the top, wrapping the disc into a halo — the haunting shape Kip Thorne and the makers of <em>Interstellar</em> rendered for Gargantua. <span class="cue">Drag</span> to tilt the disc and feed the fire.</p>
+        </div></div>
+      </section>
+
+      <!-- 6 — Tides -->
+      <section class="chapter" data-index="6">
+        <div class="chapter__sticky"><div class="chapter__content">
+          <p class="eyebrow">Tidal forces</p>
+          <h2 class="title">Spaghettification</h2>
+          <p class="body">Fall in feet-first and your feet are pulled harder than your head. Near a black hole that difference grows monstrous: you are stretched lengthwise and squeezed sideways, drawn into a thin thread of matter. Physicists, not joking, call it <em>spaghettification</em>. <span class="cue">Drag the falling astronaut</span> toward the hole and watch them stretch.</p>
+          <blockquote class="quote">
+            “When you fall into a black hole you will be, literally, spaghettified.”
+            <cite>— Brian Cox</cite>
+          </blockquote>
+        </div></div>
+      </section>
+
+      <!-- 7 — The plunge -->
+      <section class="chapter chapter--tall" data-index="7">
+        <div class="chapter__sticky"><div class="chapter__content">
+          <p class="eyebrow">Crossing over · 4D → the unknown</p>
+          <h2 class="title">The Plunge</h2>
+          <p class="body">Now fall. The disc smears, the stars slide forward and crush themselves into a shrinking ring of light directly ahead. From far away you would seem to freeze and redden at the brink, your last image hovering forever — time itself dilated to a halt. But for <em>you</em>, the horizon is just a threshold you cross without a bump, into a place from which no signal returns. <span class="cue">Keep scrolling</span> — and go through.</p>
+          <blockquote class="quote">
+            “If you fall into a black hole, you will see the entire future of the Universe unfold in front of you in a matter of moments.”
+            <cite>— Neil deGrasse Tyson</cite>
+          </blockquote>
+        </div></div>
+      </section>
+
+      <!-- 8 — Singularity -->
+      <section class="chapter" data-index="8">
+        <div class="chapter__sticky"><div class="chapter__content">
+          <p class="eyebrow">Where the map ends</p>
+          <h2 class="title">The Singularity</h2>
+          <p class="body">All paths inside lead to one place. Relativity’s equations say the matter collapses to a point of <em>zero size</em> and <em>infinite density</em>, where spacetime curvature runs to infinity and the very notions of “here” and “when” dissolve. But infinity is not an answer — it is a theory <em>confessing it has reached its limit</em>. To go further, we need new physics.</p>
+        </div></div>
+      </section>
+
+      <!-- 9 — Two realms -->
+      <section class="chapter" data-index="9">
+        <div class="chapter__sticky"><div class="chapter__content">
+          <p class="eyebrow">The great conflict</p>
+          <h2 class="title">Two Realms at War</h2>
+          <p class="body">Two theories rule reality, and they do not speak. <strong>General relativity</strong> governs the very large — smooth, curved, certain. <strong>Quantum mechanics</strong> governs the very small — grainy, probabilistic, restless. Everywhere else we can keep them apart. But a singularity is enormous gravity crushed into a quantum speck, where <em>both</em> must apply at once — and their answers collide. <span class="cue">Drag the seam</span> between the smooth and the grainy.</p>
+          <blockquote class="quote">
+            “God not only plays dice, but sometimes throws them where they cannot be seen.”
+            <cite>— Stephen Hawking</cite>
+          </blockquote>
+        </div></div>
+      </section>
+
+      <!-- 10 — Hawking radiation -->
+      <section class="chapter" data-index="10">
+        <div class="chapter__sticky"><div class="chapter__content">
+          <p class="eyebrow">Quantum · The slow leak</p>
+          <h2 class="title">Hawking Radiation</h2>
+          <p class="body">Let quantum mechanics whisper at the horizon and the black hole stops being eternal. The vacuum churns with particle pairs; at the edge one partner falls in carrying <em>negative</em> energy while the other escapes as faint heat. Grain by grain the hole loses mass — and the smaller it gets, the <em>hotter</em> and faster it boils, until it vanishes in a final flash.</p>
+          <blockquote class="quote">
+            “Black holes ain’t as black as they are painted.”
+            <cite>— Stephen Hawking</cite>
+          </blockquote>
+        </div></div>
+      </section>
+
+      <!-- 11 — Information paradox / ER=EPR -->
+      <section class="chapter" data-index="11">
+        <div class="chapter__sticky"><div class="chapter__content">
+          <p class="eyebrow">The information paradox</p>
+          <h2 class="title">What Falls In</h2>
+          <p class="body">Here the war turns vicious. Quantum law says <em>information can never be destroyed</em> — yet if the hole evaporates into featureless heat, everything that fell in is erased. Save it too eagerly and you’d need a deadly <em>firewall</em> at a horizon relativity insists is calm. One daring escape (Maldacena &amp; Susskind, <strong>ER = EPR</strong>): every entangled pair is secretly joined by a tiny <em>wormhole</em> — entanglement and geometry, the same thing. <span class="cue">Drag a partner</span> and stretch the bridge.</p>
+        </div></div>
+      </section>
+
+      <!-- 12 — White holes -->
+      <section class="chapter" data-index="12">
+        <div class="chapter__sticky"><div class="chapter__content">
+          <p class="eyebrow">The mirror solution</p>
+          <h2 class="title">White Holes</h2>
+          <p class="body">Run the equations <em>backwards</em> and a black hole flips into its opposite: a <em>white hole</em>. Where a black hole takes and never gives, a white hole gives and never takes — a horizon nothing can enter, forever pouring out light and matter. The mathematics is flawless; whether nature ever builds one, we don’t know. Some wonder if the Big Bang itself was the grandest white hole of all. <span class="cue">Try to push matter in</span> — it won’t let you.</p>
+        </div></div>
+      </section>
+
+      <!-- 13 — Wormholes -->
+      <section class="chapter chapter--tall" data-index="13">
+        <div class="chapter__sticky"><div class="chapter__content">
+          <p class="eyebrow">The bridge</p>
+          <h2 class="title">Wormholes</h2>
+          <p class="body">Join a black hole’s throat to a white hole’s mouth and you carve a shortcut through the fabric — an <em>Einstein–Rosen bridge</em>, a tunnel between two distant points, or two universes. Left alone it pinches shut faster than light can cross; to hold one open would take <em>exotic matter</em> with negative energy. Still the math allows it — the same bridge that <em>Interstellar</em> hung in the sky as a shimmering sphere. <span class="cue">Drag to travel through.</span></p>
+        </div></div>
+      </section>
+
+      <!-- 14 — Frontier -->
+      <section class="chapter" data-index="14">
+        <div class="chapter__sticky"><div class="chapter__content">
+          <p class="eyebrow">The unfinished map</p>
+          <h2 class="title">Quantum Gravity</h2>
+          <p class="body">The black hole is the one place the cosmos forces our two theories into the same room. Whatever reconciles them — <em>string theory</em>, <em>loop quantum gravity</em>, something not yet dreamed — must explain the singularity, the leak of Hawking heat, and the fate of what falls in. We are reading a sentence whose grammar we don’t yet know, and the black hole is the inkblot at its centre.</p>
+        </div></div>
+      </section>
+
+      <!-- 15 — Outro -->
+      <section class="chapter chapter--hero" data-index="15">
+        <div class="chapter__sticky"><div class="chapter__content">
+          <p class="eyebrow">Back to the light</p>
+          <h2 class="title">A Way Out</h2>
+          <blockquote class="quote quote--long">
+            “Black holes ain’t as black as they are painted. They are not the eternal prisons they were once thought. Things can get out of a black hole, both on the outside and possibly to another universe. So if you feel you are in a black hole, don’t give up — there’s a way out.”
+            <cite>— Stephen Hawking</cite>
+          </blockquote>
+          <button class="replay" data-scroll-top>↑ Fall again</button>
+          <p class="credit credit--dedication">Made with ❤️ for 🔭 by <strong>Sai</strong>. Inspired by Kip Thorne, John Wheeler &amp; Stephen Hawking.</p>
+          <p class="credit">Real-time gravitational lensing · simulated accretion disc · generative ambient audio · drag to interact · light &amp; dark</p>
+        </div></div>
+      </section>
+    </main>
+
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>
